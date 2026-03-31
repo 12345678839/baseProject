@@ -1,30 +1,104 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-
+<html lang="en">
 <head>
-  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-  <title>ADC: My First Web App</title>
+  <meta charset="UTF-8">
+  <title>Mini Postman - REST Tester</title>
+  <style>
+    body { font-family: Arial; margin: 0; display: flex; height: 100vh; }
+    .sidebar { width: 250px; background: #2c3e50; color: white; padding: 15px; }
+    .sidebar h3 { margin-top: 0; }
+    .sidebar button { width: 100%; margin: 5px 0; padding: 10px; border: none; background: #34495e; color: white; cursor: pointer; }
+    .sidebar button:hover { background: #1abc9c; }
+    .main { flex: 1; padding: 20px; }
+    input, textarea { width: 100%; margin: 10px 0; padding: 8px; }
+    textarea { height: 200px; }
+    .topbar { display: flex; gap: 10px; }
+    select, button { padding: 10px; }
+    pre { background: #f4f4f4; padding: 10px; height: 200px; overflow: auto; }
+  </style>
 </head>
-
 <body>
-  <h1>Welcome to this very simple web application!</h1>
 
-  <table>
-    <tr>
-      <td colspan="2" style="font-weight:bold;">Available Services:</td>
-    </tr>
-    <tr>
-      <td><a href='/rest/utils/hello'>Say Hello!</a></td>
-      <td>(greetings)</td>
-    </tr>
-    <tr>
-      <td><a href='/rest/utils/time'>What time is it?</a></td>
-      <td>(see server time)</td>
-    </tr>
-  </table>
+<div class="sidebar">
+  <h3>Endpoints</h3>
+  <button onclick="setEndpoint('createaccount')">Create Account</button>
+  <button onclick="setEndpoint('login')">Login</button>
+  <button onclick="setEndpoint('showusers')">Show Users</button>
+  <button onclick="setEndpoint('deleteaccount')">Delete Account</button>
+  <button onclick="setEndpoint('modaccount')">Modify Account</button>
+  <button onclick="setEndpoint('showauthsessions')">Show Sessions</button>
+  <button onclick="setEndpoint('showuserrole')">Show Role</button>
+  <button onclick="setEndpoint('changeuserrole')">Change Role</button>
+  <button onclick="setEndpoint('changeuserpwd')">Change Password</button>
+  <button onclick="setEndpoint('logout')">Logout</button>
+</div>
+
+<div class="main">
+  <h2>Mini Postman</h2>
+
+  <div class="topbar">
+    <select id="method">
+      <option>POST</option>
+    </select>
+    <input id="url" value="https://individualproject-65771.appspot.com/rest/createaccount">
+    <button onclick="sendRequest()">Send</button>
+  </div>
+
+  <h3>Body (JSON)</h3>
+  <textarea id="body">{
+  "input": {}
+}</textarea>
+
+  <h3>Saved Token</h3>
+  <textarea id="token"></textarea>
+  <button onclick="insertToken()">Insert Token into Body</button>
+
+  <h3>Response</h3>
+  <pre id="response"></pre>
+</div>
+
+<script>
+const BASE = "https://individualproject-65771.appspot.com/rest/";
+
+function setEndpoint(endpoint) {
+  document.getElementById("url").value = BASE + endpoint;
+}
+
+function insertToken() {
+  try {
+    const token = JSON.parse(document.getElementById("token").value);
+    const body = JSON.parse(document.getElementById("body").value);
+    body.token = token;
+    document.getElementById("body").value = JSON.stringify(body, null, 2);
+  } catch (e) {
+    alert("Invalid JSON");
+  }
+}
+
+async function sendRequest() {
+  const url = document.getElementById("url").value;
+  const body = document.getElementById("body").value;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: body
+    });
+
+    const data = await res.json();
+    document.getElementById("response").textContent = JSON.stringify(data, null, 2);
+
+    // auto save token if login
+    if (data.data && data.data.token) {
+      document.getElementById("token").value = JSON.stringify(data.data.token, null, 2);
+    }
+
+  } catch (err) {
+    document.getElementById("response").textContent = err;
+  }
+}
+</script>
+
 </body>
-<footer>
-  Copyright: ADC-PEI, FCT NOVA 2026
-</footer>
-
 </html>
