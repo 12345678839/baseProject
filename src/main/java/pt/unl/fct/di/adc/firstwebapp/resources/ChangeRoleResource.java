@@ -40,7 +40,7 @@ public class ChangeRoleResource {
 	}
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response changeRole(ChangeRoleData rdata) {
 
