@@ -38,7 +38,7 @@ public class ChangePasswordResource {
 	}
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response changePassword(ChangePwdData pdata) {
 
