@@ -43,7 +43,7 @@ public class RegisterResource {
 	}
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response registerUserV3(RegisterData data) {
 		LOG.fine("Attempt to register user: " + data.username);
