@@ -33,7 +33,7 @@ public class DeleteAccountResource {
 	private final Gson g = new GsonBuilder().setPrettyPrinting().create();
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteUser(DeleteData data) {
 
