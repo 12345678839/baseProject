@@ -45,7 +45,7 @@ public class ModifyAccountAttributesResource {
 	}
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response ModifyAccountAttributesResource(ModifyData mdata) {
 
