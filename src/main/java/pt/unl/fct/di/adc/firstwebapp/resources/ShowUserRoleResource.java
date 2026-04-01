@@ -39,7 +39,7 @@ public class ShowUserRoleResource {
 	}
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response showUserRole(ShowUserData sudata) {
 
