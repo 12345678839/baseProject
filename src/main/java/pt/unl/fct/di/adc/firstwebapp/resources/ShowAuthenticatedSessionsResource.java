@@ -24,7 +24,7 @@ public class ShowAuthenticatedSessionsResource {
 	private final Gson g = new Gson();
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response showSessions(AuthToken token) {
 		try {
