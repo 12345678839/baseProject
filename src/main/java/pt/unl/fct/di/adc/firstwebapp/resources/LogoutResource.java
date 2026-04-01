@@ -41,7 +41,7 @@ public class LogoutResource {
 	}
 
 	@POST
-	@Path("/v1")
+	@Path("")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response logout(LogoutData ldata) {
 
